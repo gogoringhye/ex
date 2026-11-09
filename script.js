@@ -47,6 +47,7 @@ filterButtons.forEach((button) => {
     });
 
     if (filterStatus) filterStatus.textContent = `프로젝트 ${visibleCount}개를 표시합니다.`;
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
   });
 });
 
@@ -72,22 +73,94 @@ document.querySelectorAll(".project__visual[aria-controls]").forEach((visual) =>
 if ("IntersectionObserver" in window && !reduceMotion) {
   document.documentElement.classList.add("has-reveal");
 
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add("is-visible");
-      observer.unobserve(entry.target);
-    });
-  }, { threshold: 0.12 });
+  if (window.gsap && window.ScrollTrigger) {
+    document.documentElement.classList.add("has-gsap");
+    gsap.registerPlugin(ScrollTrigger);
 
-  document.querySelectorAll(".reveal").forEach((element) => {
-    const siblings = Array.from(element.parentElement.children).filter((sibling) => sibling.classList.contains("reveal"));
-    element.style.setProperty("--reveal-delay", `${Math.min(siblings.indexOf(element), 4) * 85}ms`);
-    revealObserver.observe(element);
-  });
+    const heroCopy = document.querySelector(".hero__copy");
+    const heroVisual = document.querySelector(".hero-visual");
+    const heroLines = gsap.utils.toArray(".hero__line");
+    const revealItems = gsap.utils.toArray(".reveal").filter(
+      (element) => element !== heroCopy && element !== heroVisual
+    );
+
+    if (heroCopy) {
+      gsap.fromTo(heroCopy, { autoAlpha: 0, y: 24 }, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+      });
+    }
+
+    if (heroLines.length) {
+      gsap.fromTo(heroLines, { yPercent: 110, autoAlpha: 0 }, {
+        yPercent: 0,
+        autoAlpha: 1,
+        duration: 0.9,
+        stagger: 0.12,
+        delay: 0.12,
+        ease: "power4.out",
+      });
+    }
+
+    if (heroVisual) {
+      gsap.fromTo(heroVisual, { autoAlpha: 0, y: 30, scale: 0.98 }, {
+        autoAlpha: 1,
+        y: 0,
+        scale: 1,
+        duration: 1,
+        delay: 0.18,
+        ease: "power3.out",
+      });
+
+      const heroImage = heroVisual.querySelector("img");
+      if (heroImage) {
+        gsap.fromTo(heroImage, { yPercent: -4 }, {
+          yPercent: 4,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroVisual,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.6,
+          },
+        });
+      }
+    }
+
+    revealItems.forEach((element) => {
+      gsap.fromTo(element, { autoAlpha: 0, y: 24 }, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.75,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: element,
+          start: "top 88%",
+          once: true,
+        },
+      });
+    });
+  } else {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach((element) => {
+      const siblings = Array.from(element.parentElement.children).filter((sibling) => sibling.classList.contains("reveal"));
+      element.style.setProperty("--reveal-delay", `${Math.min(siblings.indexOf(element), 4) * 85}ms`);
+      revealObserver.observe(element);
+    });
+  }
 }
 
 const root = document.documentElement;
+const backToTop = document.querySelector(".back-to-top");
 let scrollFrame = 0;
 
 const updateScrollProgress = () => {
@@ -95,6 +168,13 @@ const updateScrollProgress = () => {
   const scrollableHeight = root.scrollHeight - window.innerHeight;
   const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
   root.style.setProperty("--scroll-progress", String(Math.min(Math.max(progress, 0), 1)));
+
+  if (backToTop) {
+    const isVisible = window.scrollY > 480;
+    backToTop.classList.toggle("is-visible", isVisible);
+    backToTop.setAttribute("aria-hidden", String(!isVisible));
+    backToTop.tabIndex = isVisible ? 0 : -1;
+  }
 };
 
 const requestScrollUpdate = () => {
@@ -105,22 +185,39 @@ window.addEventListener("scroll", requestScrollUpdate, { passive: true });
 window.addEventListener("resize", requestScrollUpdate);
 updateScrollProgress();
 
+backToTop?.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+});
+
 const hero = document.querySelector(".hero");
 const heroVisual = document.querySelector(".hero-visual");
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 1000px)");
 
 if (hero && heroVisual && finePointer.matches && !reduceMotion) {
+  const moveX = window.gsap ? gsap.quickTo(heroVisual, "x", { duration: 0.6, ease: "power3.out" }) : null;
+  const moveY = window.gsap ? gsap.quickTo(heroVisual, "y", { duration: 0.6, ease: "power3.out" }) : null;
+
   hero.addEventListener("pointermove", (event) => {
     const bounds = hero.getBoundingClientRect();
     const offsetX = (event.clientX - bounds.left) / bounds.width - 0.5;
     const offsetY = (event.clientY - bounds.top) / bounds.height - 0.5;
-    heroVisual.style.setProperty("--parallax-x", `${offsetX * -12}px`);
-    heroVisual.style.setProperty("--parallax-y", `${offsetY * -12}px`);
+    if (moveX && moveY) {
+      moveX(offsetX * -12);
+      moveY(offsetY * -12);
+    } else {
+      heroVisual.style.setProperty("--parallax-x", `${offsetX * -12}px`);
+      heroVisual.style.setProperty("--parallax-y", `${offsetY * -12}px`);
+    }
   });
 
   hero.addEventListener("pointerleave", () => {
-    heroVisual.style.setProperty("--parallax-x", "0px");
-    heroVisual.style.setProperty("--parallax-y", "0px");
+    if (moveX && moveY) {
+      moveX(0);
+      moveY(0);
+    } else {
+      heroVisual.style.setProperty("--parallax-x", "0px");
+      heroVisual.style.setProperty("--parallax-y", "0px");
+    }
   });
 }
 
@@ -161,10 +258,23 @@ if (cursor && finePointer.matches && !reduceMotion) {
       cursor.classList.remove("is-visible", "is-active");
       return;
     }
-    const target = event.target.closest("a, button, summary");
+    if (!event.target.closest("#work")) {
+      cursor.classList.remove("is-active");
+      if (cursorLabel) cursorLabel.textContent = "";
+      return;
+    }
+    if (event.target.closest(".filter-button")) {
+      cursor.classList.remove("is-active");
+      if (cursorLabel) cursorLabel.textContent = "";
+      return;
+    }
+
+    const target = event.target.closest(".project__visual, .project__details summary");
     cursor.classList.toggle("is-active", Boolean(target));
     if (!cursorLabel) return;
-    cursorLabel.textContent = target?.matches(".project__visual") ? "VIEW PROJECT" : "OPEN";
+    cursorLabel.textContent = target
+      ? target.matches(".project__visual") ? "VIEW PROJECT" : "OPEN"
+      : "";
   });
 
   document.addEventListener("pointerout", (event) => {
