@@ -3,14 +3,15 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f3f5ef">
+    <meta name="theme-color" content="#a997e8">
     <meta name="description" content="웹 표준과 접근성을 바탕으로 화면을 설계하고, 운영까지 고려하는 웹 퍼블리셔 포트폴리오입니다.">
-    <title>ex</title> 
-    <!-- <title>웹 퍼블리셔 포트폴리오 | Web Publisher</title> -->
+    <title>웹 퍼블리셔 포트폴리오 | Web Publisher</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
     <script src="./script.js" defer></script>
   </head>
   <body>
@@ -259,5 +260,9 @@
         </div>
       </div>
     </footer>
+    <button class="back-to-top" type="button" aria-label="페이지 맨 위로 이동" aria-hidden="true" tabindex="-1">
+      <span aria-hidden="true">↑</span>
+      <span class="back-to-top__label" aria-hidden="true">TOP</span>
+    </button>
   </body>
 </html>
