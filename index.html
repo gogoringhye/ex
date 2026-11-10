@@ -71,8 +71,8 @@
           <p class="work-toolbar__label">PROJECT INDEX <span aria-hidden="true">↘</span></p>
           <div class="filters" role="group" aria-label="프로젝트 분류">
             <button class="filter-button" type="button" data-filter="all" aria-pressed="true">전체 <span>03</span></button>
-            <button class="filter-button" type="button" data-filter="web" aria-pressed="false">웹 구축</button>
-            <button class="filter-button" type="button" data-filter="operation" aria-pressed="false">운영 개선</button>
+            <button class="filter-button" type="button" data-filter="web" aria-pressed="false">웹 구축 <span>02</span></button>
+            <button class="filter-button" type="button" data-filter="operation" aria-pressed="false">운영 개선 <span>01</span></button>
           </div>
         </div>
         <p class="visually-hidden" id="filter-status" aria-live="polite">프로젝트 3개를 표시합니다.</p>
@@ -81,6 +81,7 @@
           <article class="project reveal" data-category="web">
             <div class="project__body">
               <div class="project__meta"><span>WEB / CULTURE</span><span>RESPONSIVE · ACCESSIBLE</span></div>
+              <span class="project__index" aria-hidden="true">01</span>
               <h3>전시의 맥락을 읽기 쉽게,<br>온라인 아카이브</h3>
               <p class="project__summary">콘텐츠가 중심이 되는 전시 아카이브를 가정한 반응형 웹 구축 사례입니다.</p>
               <ul class="tag-list" aria-label="사용 기술"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>웹 접근성</li></ul>
@@ -105,6 +106,7 @@
           <article class="project reveal" data-category="web">
             <div class="project__body">
               <div class="project__meta"><span>WEB / COMMERCE</span><span>UI · INTERACTION</span></div>
+              <span class="project__index" aria-hidden="true">02</span>
               <h3>고르는 경험을 단순하게,<br>브랜드 스토어</h3>
               <p class="project__summary">상품 탐색부터 상세 정보 확인까지 이어지는 쇼핑 화면을 가정한 UI 구현 사례입니다.</p>
               <ul class="tag-list" aria-label="사용 기술"><li>시맨틱 HTML</li><li>CSS Grid</li><li>Vanilla JS</li><li>폼 UI</li></ul>
@@ -129,6 +131,7 @@
           <article class="project reveal" data-category="operation">
             <div class="project__body">
               <div class="project__meta"><span>MAINTENANCE / QA</span><span>DOCUMENTATION</span></div>
+              <span class="project__index" aria-hidden="true">03</span>
               <h3>수정에서 끝나지 않고,<br>다음 운영까지 편하게</h3>
               <p class="project__summary">기존 사이트 개선과 변경 이력 정리를 가정한 유지보수 프로세스 사례입니다.</p>
               <ul class="tag-list" aria-label="사용 기술"><li>접근성 점검</li><li>회귀 테스트</li><li>문서화</li><li>협업</li></ul>
@@ -149,6 +152,9 @@
               </a>
             </div>
           </article>
+        </div>
+        <div class="project-preview" aria-hidden="true">
+          <div class="project-preview__track"></div>
         </div>
       </section>
 
