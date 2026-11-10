@@ -53,6 +53,98 @@ filterButtons.forEach((button) => {
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const projectList = document.querySelector(".project-list");
+const projectPreview = document.querySelector(".project-preview");
+const projectPreviewTrack = document.querySelector(".project-preview__track");
+const canPreviewProjects = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 1000px)");
+
+if (projectList && projectPreview && projectPreviewTrack && canPreviewProjects.matches && !reduceMotion) {
+  const projectRows = Array.from(projectList.querySelectorAll(".project"));
+  const previewLayers = projectRows.map((project) => {
+    const source = project.querySelector(".project__visual img");
+    const layer = document.createElement("img");
+    layer.alt = "";
+    layer.src = source.currentSrc || source.src;
+    layer.className = "project-preview__image";
+    projectPreviewTrack.appendChild(layer);
+    if (window.gsap) gsap.set(layer, { yPercent: 100, zIndex: 1 });
+    return layer;
+  });
+  const moveX = window.gsap
+    ? gsap.quickTo(projectPreview, "left", { duration: 0.45, ease: "power3.out" })
+    : null;
+  const moveY = window.gsap
+    ? gsap.quickTo(projectPreview, "top", { duration: 0.45, ease: "power3.out" })
+    : null;
+  let lastProjectIndex = -1;
+  let topLayer = 1;
+
+  const positionPreview = (clientX, clientY) => {
+    const bounds = projectPreview.getBoundingClientRect();
+    const x = Math.min(clientX + 24, window.innerWidth - bounds.width - 12);
+    const y = Math.min(clientY + 24, window.innerHeight - bounds.height - 12);
+    if (moveX && moveY) {
+      moveX(Math.max(12, x));
+      moveY(Math.max(12, y));
+    } else {
+      projectPreview.style.left = `${Math.max(12, x)}px`;
+      projectPreview.style.top = `${Math.max(12, y)}px`;
+    }
+  };
+
+  const showProjectPreview = (project, clientX, clientY) => {
+    const index = projectRows.indexOf(project);
+    if (index < 0) return;
+
+    if (index !== lastProjectIndex) {
+      const direction = lastProjectIndex !== -1 && index < lastProjectIndex ? 100 : -100;
+      const layer = previewLayers[index];
+      layer.style.zIndex = String(++topLayer);
+      if (window.gsap) {
+        gsap.fromTo(layer, { yPercent: direction }, {
+          yPercent: 0,
+          duration: 0.6,
+          ease: "power4.out",
+          overwrite: "auto",
+        });
+      } else {
+        layer.style.transform = `translateY(${direction}%)`;
+        requestAnimationFrame(() => { layer.style.transform = "translateY(0)"; });
+      }
+      lastProjectIndex = index;
+    }
+
+    positionPreview(clientX, clientY);
+    projectPreview.classList.add("is-visible");
+  };
+
+  projectRows.forEach((project) => {
+    project.addEventListener("pointerenter", (event) => {
+      showProjectPreview(project, event.clientX, event.clientY);
+    });
+    project.addEventListener("focusin", () => {
+      const bounds = project.getBoundingClientRect();
+      showProjectPreview(project, bounds.right, bounds.top + bounds.height / 2);
+    });
+  });
+
+  projectList.addEventListener("pointermove", (event) => {
+    if (projectPreview.classList.contains("is-visible")) {
+      positionPreview(event.clientX, event.clientY);
+    }
+  });
+  projectList.addEventListener("pointerleave", () => {
+    projectPreview.classList.remove("is-visible");
+    lastProjectIndex = -1;
+  });
+  projectList.addEventListener("focusout", (event) => {
+    if (!projectList.contains(event.relatedTarget)) {
+      projectPreview.classList.remove("is-visible");
+      lastProjectIndex = -1;
+    }
+  });
+}
+
 document.querySelectorAll(".project__visual[aria-controls]").forEach((visual) => {
   const details = document.getElementById(visual.getAttribute("aria-controls"));
   const summary = details?.querySelector("summary");
