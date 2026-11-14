@@ -1,5 +1,43 @@
 document.documentElement.classList.add("js");
 
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const loader = document.querySelector("#loader");
+if (loader) {
+  const rootElement = document.documentElement;
+  let countdownStarted = false;
+
+  const startLoaderCountdown = () => {
+    if (countdownStarted) return;
+    countdownStarted = true;
+
+    window.setTimeout(() => {
+      if (reduceMotion) {
+        loader.remove();
+        rootElement.classList.remove("is-loading");
+        return;
+      }
+
+      loader.classList.add("is-exiting");
+      window.setTimeout(() => {
+        loader.remove();
+        rootElement.classList.remove("is-loading");
+      }, 850);
+    }, reduceMotion ? 1400 : 2000);
+  };
+
+  rootElement.classList.add("is-loading");
+  const fallbackTimer = window.setTimeout(startLoaderCountdown, 2600);
+  if (document.readyState === "complete") {
+    window.clearTimeout(fallbackTimer);
+    startLoaderCountdown();
+  } else {
+    window.addEventListener("load", () => {
+      window.clearTimeout(fallbackTimer);
+      startLoaderCountdown();
+    }, { once: true });
+  }
+}
+
 const menuButton = document.querySelector(".nav-toggle");
 const navigation = document.querySelector("#primary-navigation");
 
@@ -56,8 +94,6 @@ filterButtons.forEach((button) => {
   });
 });
 
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
 const hero = document.querySelector(".hero");
 const heroVisual = hero?.querySelector(".hero-visual");
 if (hero) {
@@ -80,6 +116,10 @@ if ("IntersectionObserver" in window && !reduceMotion) {
 const root = document.documentElement;
 const backToTop = document.querySelector(".back-to-top");
 const siteHeader = document.querySelector(".site-header");
+const currentSectionLabel = document.querySelector("[data-current-section]");
+const scrollIndex = document.querySelector(".scroll-index");
+const trackedSections = Array.from(document.querySelectorAll("main > section[id], footer[id]"));
+const sectionNavigationLinks = Array.from(document.querySelectorAll(".site-nav a[href^=\"#\"], .contact__nav a[href^=\"#\"]"));
 let scrollFrame = 0;
 
 const updateScrollState = () => {
@@ -88,6 +128,24 @@ const updateScrollState = () => {
   const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
   root.style.setProperty("--scroll-progress", String(Math.min(Math.max(progress, 0), 1)));
   siteHeader?.classList.toggle("is-scrolled", window.scrollY > 24);
+  scrollIndex?.classList.toggle("is-visible", hero && window.scrollY > hero.offsetHeight * 0.65);
+
+  const markerLine = window.innerHeight * 0.46;
+  const activeSection = trackedSections.find((section) => {
+    const bounds = section.getBoundingClientRect();
+    return bounds.top <= markerLine && bounds.bottom > markerLine;
+  });
+  if (activeSection) {
+    const sectionIndex = trackedSections.indexOf(activeSection);
+    if (currentSectionLabel) currentSectionLabel.textContent = String(sectionIndex + 1).padStart(2, "0");
+    sectionNavigationLinks.forEach((link) => {
+      if (link.getAttribute("href") === `#${activeSection.id}`) {
+        link.setAttribute("aria-current", "location");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
 
   if (hero && heroVisual && !reduceMotion) {
     const heroProgress = Math.min(Math.max(window.scrollY / hero.offsetHeight, 0), 1);
