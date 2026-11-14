@@ -4,11 +4,48 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 const loader = document.querySelector("#loader");
 if (loader) {
   const rootElement = document.documentElement;
+  const progressFill = loader.querySelector("#loaderFill");
+  const progressLabel = loader.querySelector("#loaderPercent");
+  const progressStatus = loader.querySelector("#loaderStatus");
+  const progressStartedAt = performance.now();
+  let progress = 0;
   let countdownStarted = false;
+
+  const renderProgress = (value) => {
+    progress = Math.max(progress, Math.min(100, Math.round(value)));
+    progressFill.style.transform = `scaleX(${progress / 100})`;
+    progressLabel.textContent = `${String(progress).padStart(2, "0")}%`;
+  };
+
+  renderProgress(progress);
+  const progressTimer = window.setInterval(() => {
+    const elapsed = Math.min((performance.now() - progressStartedAt) / 2600, 1);
+    renderProgress(Math.min(90, elapsed * 90));
+  }, 80);
 
   const startLoaderCountdown = () => {
     if (countdownStarted) return;
     countdownStarted = true;
+    window.clearInterval(progressTimer);
+
+    const progressAtReady = progress;
+
+    if (reduceMotion) {
+      renderProgress(100);
+      loader.classList.add("is-ready");
+      progressStatus.textContent = "PORTFOLIO READY";
+    } else {
+      const progressReadyAt = performance.now();
+      const readyProgressTimer = window.setInterval(() => {
+        const completion = Math.min((performance.now() - progressReadyAt) / 1400, 1);
+        renderProgress(progressAtReady + (100 - progressAtReady) * completion);
+        if (completion === 1) {
+          window.clearInterval(readyProgressTimer);
+          loader.classList.add("is-ready");
+          progressStatus.textContent = "PORTFOLIO READY";
+        }
+      }, 80);
+    }
 
     window.setTimeout(() => {
       if (reduceMotion) {
