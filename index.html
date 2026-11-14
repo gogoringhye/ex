@@ -3,39 +3,46 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f4f0e4">
+    <meta name="theme-color" content="#0f2f63">
     <meta name="description" content="NANA의 웹 퍼블리싱 포트폴리오입니다. 반응형 웹, 인터랙션, UI 프로토타입 작업을 소개합니다.">
     <title>NANA — Web Publisher Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <script src="./script.js" defer></script>
   </head>
   <body>
     <div class="scroll-progress" aria-hidden="true"><span></span></div>
+    <div class="loader" id="loader" aria-hidden="true">
+      <div class="loader__content">
+        <div class="loader__brand"><span>N/</span><span>NANA · WEB PUBLISHER</span></div>
+        <p class="loader__headline">MAKE<br>THE WEB<br><em>FEEL GOOD.</em></p>
+        <div class="loader__track"><span id="loaderFill"></span></div>
+        <div class="loader__footer"><span>PREPARING SELECTED WORK</span><span>2026</span></div>
+      </div>
+    </div>
     <a class="skip-link" href="#main">본문 바로가기</a>
-
-    <header class="site-header">
-      <a class="wordmark" href="#top" aria-label="포트폴리오 처음으로">
-        <span class="wordmark__symbol" aria-hidden="true">N/</span>
-        <span class="wordmark__name">NANA<br>WEB PUBLISHER</span>
-      </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
-        <span class="nav-toggle__label">MENU</span>
-        <span class="nav-toggle__icon" aria-hidden="true"></span>
-      </button>
-      <nav class="site-nav" id="primary-navigation" aria-label="주요 메뉴">
-        <a href="#work">프로젝트</a>
-        <a href="#about">소개</a>
-        <a href="#skills">역량</a>
-        <a href="#maintenance">유지보수</a>
-        <a class="site-nav__contact" href="#contact">연락하기 <span aria-hidden="true">↗</span></a>
-      </nav>
-    </header>
 
     <main id="main">
       <section class="hero" id="top" aria-labelledby="hero-title">
+        <header class="site-header">
+          <a class="wordmark" href="#top" aria-label="포트폴리오 처음으로">
+            <span class="wordmark__symbol" aria-hidden="true">N/</span>
+            <span class="wordmark__name">NANA<br>WEB PUBLISHER</span>
+          </a>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+            <span class="nav-toggle__label">MENU</span>
+            <span class="nav-toggle__icon" aria-hidden="true"></span>
+          </button>
+          <nav class="site-nav" id="primary-navigation" aria-label="주요 메뉴">
+            <a href="#work">프로젝트</a>
+            <a href="#about">소개</a>
+            <a href="#skills">역량</a>
+            <a href="#maintenance">유지보수</a>
+            <a class="site-nav__contact" href="#contact">연락하기 <span aria-hidden="true">↗</span></a>
+          </nav>
+        </header>
         <div class="hero__inner page-grid">
           <div class="hero__copy reveal">
             <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> NANA <span class="eyebrow__divider">/</span> WEB PUBLISHER</p>
@@ -52,13 +59,19 @@
               <a class="button button--primary" href="#work">프로젝트 살펴보기 <span aria-hidden="true">↘</span></a>
             </div>
           </div>
-          <figure class="hero-visual reveal">
+          <figure class="hero-visual">
             <img src="./img/dorarun.png" alt="Explore Cappadocia 프로젝트의 웹 화면과 풍경을 담은 포트폴리오 이미지" fetchpriority="high">
             <figcaption class="hero-visual__caption"><span>SELECTED WORK — WEB EXPERIENCE</span><span>PORTFOLIO — 2026</span></figcaption>
-            <span class="hero-visual__stamp" aria-hidden="true">웹을<br>더 좋게<span>.</span></span>
           </figure>
           <a class="scroll-cue" href="#work"><span class="scroll-cue__line" aria-hidden="true"></span>SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a>
-          <p class="hero__index" aria-hidden="true">01 / 06</p>
+          <a class="hero-feature" href="#work" aria-label="프로젝트 목록에서 Explore Cappadocia 보기">
+            <img src="./img/dorarun.png" alt="" aria-hidden="true">
+            <span class="hero-feature__copy">
+              <span class="hero-feature__label">FEATURED PROJECT · 03</span>
+              <span class="hero-feature__title">Explore Cappadocia</span>
+              <span class="hero-feature__meta">3D WEB EXPERIENCE <span aria-hidden="true">↗</span></span>
+            </span>
+          </a>
         </div>
       </section>
 
@@ -447,5 +460,10 @@
       <span aria-hidden="true">↑</span>
       <span class="back-to-top__label" aria-hidden="true">TOP</span>
     </button>
+    <div class="scroll-index" aria-hidden="true">
+      <span class="scroll-index__current" data-current-section>01</span>
+      <span class="scroll-index__separator">/</span>
+      <span>07</span>
+    </div>
   </body>
 </html>
