@@ -155,7 +155,7 @@ const backToTop = document.querySelector(".back-to-top");
 const siteHeader = document.querySelector(".site-header");
 const currentSectionLabel = document.querySelector("[data-current-section]");
 const scrollIndex = document.querySelector(".scroll-index");
-const trackedSections = Array.from(document.querySelectorAll("main > section[id], footer[id]"));
+const trackedSections = Array.from(document.querySelectorAll("main > section[id]:not(#top), footer[id]"));
 const sectionNavigationLinks = Array.from(document.querySelectorAll(".site-nav a[href^=\"#\"], .contact__nav a[href^=\"#\"]"));
 let scrollFrame = 0;
 
@@ -231,5 +231,48 @@ if (hero && heroVisual && finePointer.matches && !reduceMotion) {
   hero.addEventListener("pointerleave", () => {
     heroVisual.style.setProperty("--pointer-x", "0px");
     heroVisual.style.setProperty("--pointer-y", "0px");
+  });
+}
+
+const aboutPanel = document.querySelector("[data-about-panel]");
+const contactSection = document.querySelector(".contact");
+const contactPanel = contactSection?.querySelector(".contact__aside");
+if (finePointer.matches && !reduceMotion) {
+  const setTilt = (element, event, maxAngle) => {
+    const bounds = element.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+    element.style.setProperty("--tilt-x", `${x * maxAngle}deg`);
+    element.style.setProperty("--tilt-y", `${-y * maxAngle}deg`);
+  };
+  const resetTilt = (element) => {
+    element.style.setProperty("--tilt-x", "0deg");
+    element.style.setProperty("--tilt-y", "0deg");
+  };
+
+  aboutPanel?.addEventListener("pointermove", (event) => setTilt(aboutPanel, event, 4));
+  aboutPanel?.addEventListener("pointerleave", () => resetTilt(aboutPanel));
+
+  contactSection?.addEventListener("pointermove", (event) => {
+    const bounds = contactSection.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width;
+    const y = (event.clientY - bounds.top) / bounds.height;
+    contactSection.style.setProperty("--footer-x", `${Math.round(x * 100)}%`);
+    contactSection.style.setProperty("--footer-y", `${Math.round(y * 100)}%`);
+    if (contactPanel) {
+      const panelBounds = contactPanel.getBoundingClientRect();
+      const panelX = (event.clientX - panelBounds.left) / panelBounds.width - 0.5;
+      const panelY = (event.clientY - panelBounds.top) / panelBounds.height - 0.5;
+      const insidePanel = panelX >= -0.5 && panelX <= 0.5 && panelY >= -0.5 && panelY <= 0.5;
+      contactPanel.style.setProperty("--aside-x", `${insidePanel ? panelX * 8 : 0}px`);
+      contactPanel.style.setProperty("--aside-y", `${insidePanel ? panelY * 8 : 0}px`);
+    }
+  }, { passive: true });
+
+  contactSection?.addEventListener("pointerleave", () => {
+    contactSection.style.setProperty("--footer-x", "82%");
+    contactSection.style.setProperty("--footer-y", "45%");
+    contactPanel?.style.setProperty("--aside-x", "0px");
+    contactPanel?.style.setProperty("--aside-y", "0px");
   });
 }
