@@ -292,6 +292,34 @@ backToTop?.addEventListener("click", () => {
 });
 
 const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+const magneticButton = document.querySelector(".magnetic");
+const magneticInner = magneticButton?.querySelector(".magnetic__inner");
+
+if (magneticButton && magneticInner && finePointer.matches && !reduceMotion) {
+  let magneticBounds;
+
+  magneticButton.addEventListener("pointerenter", () => {
+    magneticBounds = magneticButton.getBoundingClientRect();
+  });
+  magneticButton.addEventListener("pointermove", (event) => {
+    magneticBounds = magneticBounds || magneticButton.getBoundingClientRect();
+    const offsetX = event.clientX - (magneticBounds.left + magneticBounds.width / 2);
+    const offsetY = event.clientY - (magneticBounds.top + magneticBounds.height / 2);
+    const clampOffset = (value, limit) => Math.min(Math.max(value, -limit), limit);
+    magneticButton.style.setProperty("--magnetic-x", `${clampOffset(offsetX * 0.3, 12)}px`);
+    magneticButton.style.setProperty("--magnetic-y", `${clampOffset(offsetY * 0.3, 12)}px`);
+    magneticInner.style.setProperty("--magnetic-inner-x", `${clampOffset(offsetX * 0.12, 5)}px`);
+    magneticInner.style.setProperty("--magnetic-inner-y", `${clampOffset(offsetY * 0.12, 5)}px`);
+  }, { passive: true });
+  magneticButton.addEventListener("pointerleave", () => {
+    magneticBounds = null;
+    magneticButton.style.removeProperty("--magnetic-x");
+    magneticButton.style.removeProperty("--magnetic-y");
+    magneticInner.style.removeProperty("--magnetic-inner-x");
+    magneticInner.style.removeProperty("--magnetic-inner-y");
+  });
+}
+
 if (hero && heroVisual && finePointer.matches && !reduceMotion) {
   hero.addEventListener("pointermove", (event) => {
     const bounds = hero.getBoundingClientRect();
