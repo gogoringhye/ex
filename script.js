@@ -337,7 +337,6 @@ if (hero && heroVisual && finePointer.matches && !reduceMotion) {
 
 const aboutPanel = document.querySelector("[data-about-panel]");
 const contactSection = document.querySelector(".contact");
-const contactPanel = contactSection?.querySelector(".contact__aside");
 if (finePointer.matches && !reduceMotion) {
   const setTilt = (element, event, maxAngle) => {
     const bounds = element.getBoundingClientRect();
@@ -360,20 +359,10 @@ if (finePointer.matches && !reduceMotion) {
     const y = (event.clientY - bounds.top) / bounds.height;
     contactSection.style.setProperty("--footer-x", `${Math.round(x * 100)}%`);
     contactSection.style.setProperty("--footer-y", `${Math.round(y * 100)}%`);
-    if (contactPanel) {
-      const panelBounds = contactPanel.getBoundingClientRect();
-      const panelX = (event.clientX - panelBounds.left) / panelBounds.width - 0.5;
-      const panelY = (event.clientY - panelBounds.top) / panelBounds.height - 0.5;
-      const insidePanel = panelX >= -0.5 && panelX <= 0.5 && panelY >= -0.5 && panelY <= 0.5;
-      contactPanel.style.setProperty("--aside-x", `${insidePanel ? panelX * 8 : 0}px`);
-      contactPanel.style.setProperty("--aside-y", `${insidePanel ? panelY * 8 : 0}px`);
-    }
   }, { passive: true });
 
   contactSection?.addEventListener("pointerleave", () => {
     contactSection.style.setProperty("--footer-x", "82%");
     contactSection.style.setProperty("--footer-y", "45%");
-    contactPanel?.style.setProperty("--aside-x", "0px");
-    contactPanel?.style.setProperty("--aside-y", "0px");
   });
 }
