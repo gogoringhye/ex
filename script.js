@@ -85,6 +85,14 @@ if (menuButton && navigation) {
     if (returnFocus) menuButton.focus();
   };
 
+  const syncMenuState = () => {
+    const isMobile = window.matchMedia("(max-width: 960px)").matches;
+    if (!isMobile) {
+      menuButton.setAttribute("aria-expanded", "false");
+      navigation.classList.remove("is-open");
+    }
+  };
+
   menuButton.addEventListener("click", () => {
     const isOpen = menuButton.getAttribute("aria-expanded") === "true";
     menuButton.setAttribute("aria-expanded", String(!isOpen));
@@ -95,16 +103,78 @@ if (menuButton && navigation) {
     if (event.target.closest("a")) closeMenu();
   });
 
+  document.addEventListener("click", (event) => {
+    const clickedInsideMenu = navigation.contains(event.target) || menuButton.contains(event.target);
+    if (!clickedInsideMenu) closeMenu();
+  });
+
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && menuButton.getAttribute("aria-expanded") === "true") {
       closeMenu(true);
     }
   });
+
+  window.addEventListener("resize", syncMenuState);
+  syncMenuState();
 }
 
 const filterButtons = Array.from(document.querySelectorAll("[data-filter]"));
 const projects = Array.from(document.querySelectorAll(".work-card[data-category]"));
 const filterStatus = document.querySelector("#filter-status");
+const projectPreview = document.querySelector(".work-preview");
+const projectPreviewImage = projectPreview?.querySelector("img");
+
+projects.forEach((project) => {
+  const cover = project.querySelector(".work-card__cover");
+  const title = project.querySelector("h3")?.textContent.trim();
+  if (!cover || !title) return;
+
+  const arrowLink = document.createElement("a");
+  const arrow = document.createElement("span");
+  arrowLink.className = "work-card__arrow";
+  arrowLink.href = cover.href;
+  arrowLink.target = cover.target;
+  arrowLink.rel = cover.rel;
+  arrowLink.setAttribute("aria-label", `${title} 프로젝트 열기`);
+  arrow.setAttribute("aria-hidden", "true");
+  arrow.textContent = "↗";
+  arrowLink.appendChild(arrow);
+  project.appendChild(arrowLink);
+});
+
+if (projectPreview && projectPreviewImage && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  const positionPreview = (event) => {
+    const halfWidth = projectPreview.offsetWidth / 2;
+    const halfHeight = projectPreview.offsetHeight / 2;
+    const x = Math.min(Math.max(event.clientX, halfWidth + 12), window.innerWidth - halfWidth - 12);
+    const y = Math.min(Math.max(event.clientY, halfHeight + 12), window.innerHeight - halfHeight - 12);
+    projectPreview.style.left = `${x}px`;
+    projectPreview.style.top = `${y}px`;
+  };
+
+  projects.forEach((project) => {
+    project.addEventListener("pointerenter", (event) => {
+      const source = project.querySelector(".work-card__image")?.getAttribute("src");
+      if (!source) return;
+      projectPreviewImage.src = source;
+      projectPreview.classList.add("is-visible");
+      positionPreview(event);
+    });
+    project.addEventListener("pointermove", positionPreview);
+    project.addEventListener("pointerleave", () => projectPreview.classList.remove("is-visible"));
+    project.addEventListener("focusin", () => {
+      const source = project.querySelector(".work-card__image")?.getAttribute("src");
+      if (!source) return;
+      projectPreviewImage.src = source;
+      projectPreview.classList.add("is-visible");
+      const bounds = project.getBoundingClientRect();
+      positionPreview({ clientX: window.innerWidth * 0.72, clientY: bounds.top + bounds.height / 2 });
+    });
+    project.addEventListener("focusout", (event) => {
+      if (!project.contains(event.relatedTarget)) projectPreview.classList.remove("is-visible");
+    });
+  });
+}
 
 const countProjects = (filter) => projects.filter((project) => (
   filter === "all" || project.dataset.category.split(/\s+/).includes(filter)
@@ -127,7 +197,10 @@ filterButtons.forEach((button) => {
       project.hidden = !isVisible;
     });
 
-    if (filterStatus) filterStatus.textContent = `프로젝트 ${visibleCount}개를 표시합니다.`;
+    if (filterStatus) {
+      const filterLabel = button.childNodes[0].textContent.trim();
+      filterStatus.textContent = `${filterLabel} 프로젝트 ${visibleCount}개를 표시합니다.`;
+    }
   });
 });
 
