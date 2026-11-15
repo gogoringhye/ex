@@ -1605,3 +1605,46 @@ main {
   .skills .skill-card + .skill-card { padding-left: 1.5rem; }
   .skills .skill-card h3 { margin-top: 1.25rem; }
 }
+
+.magnetic {
+  display: inline-block;
+  color: inherit;
+  text-decoration: none;
+  transform: translate3d(var(--magnetic-x, 0), var(--magnetic-y, 0), 0);
+  transition: transform 380ms var(--ease-out);
+  will-change: transform;
+}
+.magnetic__inner {
+  display: inline-flex;
+  min-height: 3.5rem;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  background: #fff;
+  color: #0f2f63;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  transform: translate3d(var(--magnetic-inner-x, 0), var(--magnetic-inner-y, 0), 0);
+  transition: transform 380ms var(--ease-out), box-shadow 350ms ease, background-color 250ms ease;
+}
+.magnetic:hover .magnetic__inner,
+.magnetic:focus-visible .magnetic__inner {
+  background: #f1f7ff;
+  box-shadow: 0 0 0 5px rgba(169, 204, 255, 0.2), 0 14px 36px rgba(5, 23, 52, 0.22);
+}
+.magnetic:focus-visible { outline: none; }
+.magnetic__arrow {
+  display: inline-block;
+  color: #2563c9;
+  font-size: 1.1rem;
+  transition: transform 350ms var(--ease-out);
+}
+.magnetic:hover .magnetic__arrow,
+.magnetic:focus-visible .magnetic__arrow { transform: translate(0.25rem, 0.15rem); }
+
+@media (max-width: 760px) {
+  .magnetic__inner { min-height: 3.25rem; padding: 0.8rem 1.2rem; }
+}
