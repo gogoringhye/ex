@@ -79,9 +79,9 @@
         <div class="section-heading reveal">
           <div>
             <p class="eyebrow">SELECTED WORK <span class="eyebrow__divider">/</span> 01—13</p>
-            <h2 id="work-title">호기심을 따라 만든<br><span>웹과 인터랙션.</span></h2>
+            <h2 id="work-title">프로젝트로 보여주는<br><span>웹과 인터랙션.</span></h2>
           </div>
-          <p class="section-heading__aside">작년 포트폴리오에 수록된 13개 작업을 다시 분류하고, 추가한 프로젝트 이미지를 연결했습니다.</p>
+          <p class="section-heading__aside">프로젝트를 선택해 자세히 보고, 분류를 눌러 원하는 작업만 살펴보세요.</p>
         </div>
 
         <div class="work-toolbar">
@@ -93,16 +93,16 @@
             <button class="filter-button" type="button" data-filter="design" aria-pressed="false">디자인 · 프로토타입 <span>07</span></button>
           </div>
         </div>
-        <p class="visually-hidden" id="filter-status" aria-live="polite">프로젝트 13개를 표시합니다.</p>
+        <p class="filter-status" id="filter-status" aria-live="polite">전체 프로젝트 13개를 표시합니다.</p>
 
-        <div class="work-card-grid">
-          <article class="work-card reveal" data-category="web">
+        <div class="work-card-grid" role="list">
+          <article class="work-card reveal" role="listitem" data-category="web">
             <a class="work-card__cover work-card__cover--hm" href="https://reactshoppinghnm.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="H&amp;M Shopping 사이트 새 탭에서 열기">
               <img class="work-card__image" src="./img/h%26m.png" alt="" loading="lazy" decoding="async">
               <span class="work-card__cover-label">01 / SHOPPING APP</span><span class="work-card__wordmark">H&amp;M</span><span class="work-card__cover-note">REACT · SPA</span>
             </a>
             <div class="work-card__content">
-              <p class="work-card__meta">WEB APPLICATION <span>· 01</span></p>
+              <p class="work-card__meta"><span class="work-card__type">WEB APPLICATION</span><span class="work-card__number">· 01</span></p>
               <h3>H&amp;M Shopping</h3>
               <p>React와 Node.js, JSX를 사용해 구성한 SPA 쇼핑 프로젝트입니다.</p>
               <ul class="work-card__tags" aria-label="사용 기술"><li>React</li><li>Node.js</li><li>JSX</li><li>SPA</li></ul>
@@ -113,13 +113,13 @@
             </div>
           </article>
 
-          <article class="work-card reveal" data-category="web">
+          <article class="work-card reveal" role="listitem" data-category="web">
             <a class="work-card__cover work-card__cover--magma" href="https://realmagma.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="MAGMA 사이트 새 탭에서 열기">
               <img class="work-card__image" src="./img/magma.png" alt="" loading="lazy" decoding="async">
               <span class="work-card__cover-label">02 / MOTION WEB</span><span class="work-card__wordmark">MAGMA</span><span class="work-card__cover-note">GSAP · INTERACTION</span>
             </a>
             <div class="work-card__content">
-              <p class="work-card__meta">INTERACTIVE WEB <span>· 02</span></p>
+              <p class="work-card__meta"><span class="work-card__type">INTERACTIVE WEB</span><span class="work-card__number">· 02</span></p>
               <h3>MAGMA</h3>
               <p>HTML, CSS, JavaScript와 GSAP를 활용한 인터랙티브 웹 작업입니다.</p>
               <ul class="work-card__tags" aria-label="사용 기술"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>GSAP</li></ul>
@@ -130,13 +130,13 @@
             </div>
           </article>
 
-          <article class="work-card reveal" data-category="web design">
+          <article class="work-card reveal" role="listitem" data-category="web design">
             <a class="work-card__cover work-card__cover--cappadocia" href="https://khlaw1np.dora.run/" target="_blank" rel="noopener noreferrer" aria-label="Explore Cappadocia 사이트 새 탭에서 열기">
               <img class="work-card__image" src="./img/dorarun.png" alt="" loading="lazy" decoding="async">
               <span class="work-card__cover-label">03 / 3D EXPERIENCE</span><span class="work-card__wordmark">EXPLORE<br>CAPPADOCIA</span><span class="work-card__cover-note">MADE WITH DORA</span>
             </a>
             <div class="work-card__content">
-              <p class="work-card__meta">NO-CODE · 3D WEB <span>· 03</span></p>
+              <p class="work-card__meta"><span class="work-card__type">NO-CODE · 3D WEB</span><span class="work-card__number">· 03</span></p>
               <h3>Explore Cappadocia</h3>
               <p>Dora를 이용해 3D 애니메이션을 적용한 여행 테마 웹사이트를 만들었습니다.</p>
               <ul class="work-card__tags" aria-label="사용 도구"><li>Dora</li><li>3D</li><li>Animation</li></ul>
@@ -146,13 +146,13 @@
             </div>
           </article>
 
-          <article class="work-card reveal" data-category="web responsive">
+          <article class="work-card reveal" role="listitem" data-category="web responsive">
             <a class="work-card__cover work-card__cover--kylie" href="https://kyliecosmetics.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Kylie Cosmetics 사이트 새 탭에서 열기">
               <img class="work-card__image" src="./img/kyliecosmetics.png" alt="" loading="lazy" decoding="async">
               <span class="work-card__cover-label">04 / RESPONSIVE WEB</span><span class="work-card__wordmark">KYLIE<br>COSMETICS</span><span class="work-card__cover-note">LAYOUT · JQUERY</span>
             </a>
             <div class="work-card__content">
-              <p class="work-card__meta">RESPONSIVE SITE <span>· 04</span></p>
+              <p class="work-card__meta"><span class="work-card__type">RESPONSIVE SITE</span><span class="work-card__number">· 04</span></p>
               <h3>Kylie Cosmetics</h3>
               <p>화면 크기에 맞춘 레이아웃과 jQuery를 활용한 개선 작업입니다.</p>
               <ul class="work-card__tags" aria-label="사용 기술"><li>Responsive</li><li>HTML</li><li>CSS</li><li>jQuery</li></ul>
@@ -163,13 +163,13 @@
             </div>
           </article>
 
-          <article class="work-card reveal" data-category="web design">
+          <article class="work-card reveal" role="listitem" data-category="web design">
             <a class="work-card__cover work-card__cover--psd" href="https://photoshopweb.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="PSD to Web 사이트 새 탭에서 열기">
               <img class="work-card__image" src="./img/psd_to_web.png" alt="" loading="lazy" decoding="async">
               <span class="work-card__cover-label">05 / DESIGN TO CODE</span><span class="work-card__wordmark">PSD<br>→ WEB</span><span class="work-card__cover-note">DESIGNED IN PHOTOSHOP</span>
             </a>
             <div class="work-card__content">
-              <p class="work-card__meta">DESIGN · PUBLISHING <span>· 05</span></p>
+              <p class="work-card__meta"><span class="work-card__type">DESIGN · PUBLISHING</span><span class="work-card__number">· 05</span></p>
               <h3>PSD to Web</h3>
               <p>직접 디자인한 Photoshop 시안을 웹사이트로 구현한 작업입니다.</p>
               <ul class="work-card__tags" aria-label="사용 도구"><li>Photoshop</li><li>HTML</li><li>CSS</li></ul>
@@ -179,13 +179,13 @@
             </div>
           </article>
 
-          <article class="work-card reveal" data-category="design">
+          <article class="work-card reveal" role="listitem" data-category="design">
             <a class="work-card__cover work-card__cover--tocobo" href="https://www.figma.com/proto/gzq7l2MsZFCaeAIm0MEFaQ/TOCOBO?node-id=34-213&amp;p=f&amp;t=mgTrXYRAdAOpye7F-1&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=1%3A3&amp;starting-point-node-id=34%3A213" target="_blank" rel="noopener noreferrer" aria-label="TOCOBO 프로토타입 새 탭에서 열기">
               <img class="work-card__image" src="./img/tocobo.png" alt="" loading="lazy" decoding="async">
               <span class="work-card__cover-label">06 / CLICK-THROUGH PROTOTYPE</span><span class="work-card__wordmark">TOCOBO</span><span class="work-card__cover-note">FIGMA · PAGE TRANSITIONS</span>
             </a>
             <div class="work-card__content">
-              <p class="work-card__meta">UI PROTOTYPE <span>· 06</span></p>
+              <p class="work-card__meta"><span class="work-card__type">UI PROTOTYPE</span><span class="work-card__number">· 06</span></p>
               <h3>TOCOBO</h3>
               <p>페이지 전환 효과를 적용하고 여러 기기에서 확인할 수 있도록 만든 Figma 프로토타입입니다.</p>
               <ul class="work-card__tags" aria-label="사용 도구"><li>Figma</li><li>Prototype</li><li>UI</li></ul>
@@ -195,13 +195,13 @@
             </div>
           </article>
 
-          <article class="work-card reveal" data-category="web responsive design">
+          <article class="work-card reveal" role="listitem" data-category="web responsive design">
             <a class="work-card__cover work-card__cover--fashion" href="https://figmaportfoliogogoring.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Fashion Style 사이트 새 탭에서 열기">
               <img class="work-card__image" src="./img/fashion%20style.png" alt="" loading="lazy" decoding="async">
               <span class="work-card__cover-label">07 / MOBILE UI</span><span class="work-card__wordmark">FASHION<br>STYLE</span><span class="work-card__cover-note">FIGMA TO WEB</span>
             </a>
             <div class="work-card__content">
-              <p class="work-card__meta">MOBILE UI · PUBLISHING <span>· 07</span></p>
+              <p class="work-card__meta"><span class="work-card__type">MOBILE UI · PUBLISHING</span><span class="work-card__number">· 07</span></p>
               <h3>Fashion Style</h3>
               <p>모바일 UI/UX를 살펴보기 위해 Figma 시안을 웹사이트로 구현했습니다.</p>
               <ul class="work-card__tags" aria-label="사용 도구"><li>Figma</li><li>Responsive</li><li>HTML</li><li>CSS</li></ul>
@@ -212,13 +212,13 @@
             </div>
           </article>
 
-          <article class="work-card reveal" data-category="web responsive">
+          <article class="work-card reveal" role="listitem" data-category="web responsive">
             <a class="work-card__cover work-card__cover--sushi" href="https://responsivesushi.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Sushi 사이트 새 탭에서 열기">
               <img class="work-card__image" src="./img/sushis.png" alt="" loading="lazy" decoding="async">
               <span class="work-card__cover-label">08 / RESPONSIVE SITE</span><span class="work-card__wordmark">SUSHI</span><span class="work-card__cover-note">SEMANTIC · JAVASCRIPT</span>
             </a>
             <div class="work-card__content">
-              <p class="work-card__meta">RESPONSIVE WEB <span>· 08</span></p>
+              <p class="work-card__meta"><span class="work-card__type">RESPONSIVE WEB</span><span class="work-card__number">· 08</span></p>
               <h3>Sushi</h3>
               <p>시맨틱 마크업과 JavaScript를 적용한 반응형 웹 프로젝트입니다.</p>
               <ul class="work-card__tags" aria-label="사용 기술"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsive</li></ul>
@@ -229,13 +229,13 @@
             </div>
           </article>
 
-          <article class="work-card reveal" data-category="design">
+          <article class="work-card reveal" role="listitem" data-category="design">
             <a class="work-card__cover work-card__cover--spline" href="https://my.spline.design/untitled-63c60b07e6e1d5d659ef8afb73ab6e1f/" target="_blank" rel="noopener noreferrer" aria-label="Spline 인터랙션 새 탭에서 열기">
               <img class="work-card__image" src="./img/spline_bg.png" alt="" loading="lazy" decoding="async">
               <span class="work-card__cover-label">09 / INTERACTIVE 3D</span><span class="work-card__wordmark">SPLINE</span><span class="work-card__cover-note">KEYBOARD · MODELING</span>
             </a>
             <div class="work-card__content">
-              <p class="work-card__meta">3D INTERACTION <span>· 09</span></p>
+              <p class="work-card__meta"><span class="work-card__type">3D INTERACTION</span><span class="work-card__number">· 09</span></p>
               <h3>Spline Keyboard</h3>
               <p>화면 키패드 클릭이나 숫자·Enter 키 입력으로 작동하는 3D 모델을 구현했습니다.</p>
               <ul class="work-card__tags" aria-label="사용 도구"><li>Spline</li><li>3D</li><li>Interaction</li></ul>
@@ -245,13 +245,13 @@
             </div>
           </article>
 
-          <article class="work-card reveal" data-category="web">
+          <article class="work-card reveal" role="listitem" data-category="web">
             <a class="work-card__cover work-card__cover--cyberfiction" href="https://cyberfiction1.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Cyberfiction 사이트 새 탭에서 열기">
               <img class="work-card__image" src="./img/cyberfiction.png" alt="" loading="lazy" decoding="async">
               <span class="work-card__cover-label">10 / SCROLL EXPERIENCE</span><span class="work-card__wordmark">CYBER<br>FICTION</span><span class="work-card__cover-note">GSAP · WEB</span>
             </a>
             <div class="work-card__content">
-              <p class="work-card__meta">MOTION WEB <span>· 10</span></p>
+              <p class="work-card__meta"><span class="work-card__type">MOTION WEB</span><span class="work-card__number">· 10</span></p>
               <h3>Cyberfiction</h3>
               <p>HTML, CSS, JavaScript와 GSAP를 활용한 스크롤 중심 웹 작업입니다.</p>
               <ul class="work-card__tags" aria-label="사용 기술"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>GSAP</li></ul>
@@ -262,13 +262,13 @@
             </div>
           </article>
 
-          <article class="work-card reveal" data-category="web">
+          <article class="work-card reveal" role="listitem" data-category="web">
             <a class="work-card__cover work-card__cover--hana" href="https://hanacardzzizone.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Hana Card 사이트 새 탭에서 열기">
               <img class="work-card__image" src="./img/hanacard.png" alt="" loading="lazy" decoding="async">
               <span class="work-card__cover-label">11 / ACCESSIBILITY</span><span class="work-card__wordmark">HANA<br>CARD</span><span class="work-card__cover-note">HTML · CSS · JQUERY</span>
             </a>
             <div class="work-card__content">
-              <p class="work-card__meta">ACCESSIBLE WEB <span>· 11</span></p>
+              <p class="work-card__meta"><span class="work-card__type">ACCESSIBLE WEB</span><span class="work-card__number">· 11</span></p>
               <h3>Hana Card</h3>
               <p>웹 접근성을 중심에 두고 HTML, CSS, jQuery로 구성한 프로젝트입니다.</p>
               <ul class="work-card__tags" aria-label="사용 기술"><li>Accessibility</li><li>HTML</li><li>CSS</li><li>jQuery</li></ul>
@@ -279,13 +279,13 @@
             </div>
           </article>
 
-          <article class="work-card reveal" data-category="design">
+          <article class="work-card reveal" role="listitem" data-category="design">
             <a class="work-card__cover work-card__cover--maru" href="./img/maru.png" target="_blank" rel="noopener noreferrer" aria-label="마루는 강쥐 원본 이미지 새 탭에서 열기">
               <img class="work-card__image" src="./img/Illustrator_maru.png" alt="" loading="lazy" decoding="async">
               <span class="work-card__cover-label">12 / DIGITAL DRAWING</span><span class="work-card__wordmark">MARU</span><span class="work-card__cover-note">PEN TOOL · ILLUSTRATION</span>
             </a>
             <div class="work-card__content">
-              <p class="work-card__meta">ILLUSTRATION STUDY <span>· 12</span></p>
+              <p class="work-card__meta"><span class="work-card__type">ILLUSTRATION STUDY</span><span class="work-card__number">· 12</span></p>
               <h3>마루는 강쥐</h3>
               <p>펜툴로 곡선을 다듬으며 세밀한 디지털 드로잉 표현을 연습했습니다.</p>
               <ul class="work-card__tags" aria-label="사용 도구"><li>Illustrator</li><li>Pen Tool</li><li>Digital Drawing</li></ul>
@@ -295,13 +295,13 @@
             </div>
           </article>
 
-          <article class="work-card reveal" data-category="design">
+          <article class="work-card reveal" role="listitem" data-category="design">
             <a class="work-card__cover work-card__cover--aineko" href="./img/aineko.png" target="_blank" rel="noopener noreferrer" aria-label="아이네꼬 원본 이미지 새 탭에서 열기">
               <img class="work-card__image" src="./img/Illustrator_aineko.png" alt="" loading="lazy" decoding="async">
               <span class="work-card__cover-label">13 / DIGITAL DRAWING</span><span class="work-card__wordmark">AINEKO</span><span class="work-card__cover-note">PEN TOOL · ILLUSTRATION</span>
             </a>
             <div class="work-card__content">
-              <p class="work-card__meta">ILLUSTRATION STUDY <span>· 13</span></p>
+              <p class="work-card__meta"><span class="work-card__type">ILLUSTRATION STUDY</span><span class="work-card__number">· 13</span></p>
               <h3>와와일공구 아이네꼬</h3>
               <p>펜툴을 활용해 곡선을 조절하고 디지털 드로잉의 디테일을 연습했습니다.</p>
               <ul class="work-card__tags" aria-label="사용 도구"><li>Illustrator</li><li>Pen Tool</li><li>Digital Drawing</li></ul>
@@ -311,6 +311,7 @@
             </div>
           </article>
         </div>
+        <div class="work-preview" aria-hidden="true"><img src="" alt=""></div>
       </section>
 
       <section class="about section-shell" id="about" aria-labelledby="about-title">
